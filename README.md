@@ -36,167 +36,18 @@ Cleaning-Service-Management-System/
 
 All API endpoints are prefixed with `/api` and expect JSON payloads for request bodies.
 
-### 1. Cleaning Services
-
-#### `GET /api/services`
-- **Description:** Retrieve all active cleaning services in the catalog.
-- **Access:** Public
-- **Response Format:**
-  ```json
-  [
-    {
-      "_id": "664c391219b21f0015ab54ef",
-      "name": "Deep Home Clean",
-      "description": "Thorough sanitization of every room...",
-      "price": 120,
-      "imageUrl": "https://images.unsplash.com/...jpeg",
-      "createdAt": "2026-05-29T03:00:00.000Z",
-      "updatedAt": "2026-05-29T03:00:00.000Z"
-    }
-  ]
-  ```
-
----
-
-### 2. Booking Engine
-
-#### `POST /api/bookings`
-- **Description:** Create a new cleaning appointment in the database.
-- **Access:** Public
-- **Request Body:**
-  ```json
-  {
-    "serviceId": "664c391219b21f0015ab54ef",
-    "userName": "John Doe",
-    "date": "2026-06-15T09:00:00.000Z",
-    "address": "123 Main St, New York, NY",
-    "email": "john.doe@example.com",
-    "phone": "+1 (555) 019-2834"
-  }
-  ```
-- **Response Format (`201 Created`):**
-  ```json
-  {
-    "_id": "664c4892c2ab1e2049ba12ac",
-    "service": "664c391219b21f0015ab54ef",
-    "userName": "John Doe",
-    "date": "2026-06-15T09:00:00.000Z",
-    "address": "123 Main St, New York, NY",
-    "email": "john.doe@example.com",
-    "phone": "+1 (555) 019-2834",
-    "status": "Pending",
-    "createdAt": "2026-05-29T03:25:00.000Z",
-    "updatedAt": "2026-05-29T03:25:00.000Z"
-  }
-  ```
-
-#### `GET /api/bookings`
-- **Description:** Retrieve all received client bookings (populated with full Service models).
-- **Access:** Protected (Requires Header authentication)
-- **Headers:** `x-admin-token: admin_secret_2026`
-- **Response Format:**
-  ```json
-  [
-    {
-      "_id": "664c4892c2ab1e2049ba12ac",
-      "service": {
-        "_id": "664c391219b21f0015ab54ef",
-        "name": "Deep Home Clean",
-        "price": 120
-      },
-      "userName": "John Doe",
-      "date": "2026-06-15T09:00:00.000Z",
-      "address": "123 Main St, New York, NY",
-      "email": "john.doe@example.com",
-      "phone": "+1 (555) 019-2834",
-      "status": "Pending"
-    }
-  ]
-  ```
-
-#### `PATCH /api/bookings/:id/complete`
-- **Description:** Toggle booking status to "Completed".
-- **Access:** Protected (Requires Header authentication)
-- **Headers:** `x-admin-token: admin_secret_2026`
-- **Response Format:** Returns the updated booking object with status set to `"Completed"`.
-
-#### `DELETE /api/bookings/:id`
-- **Description:** Permanently delete a booking entry from the database.
-- **Access:** Protected (Requires Header authentication)
-- **Headers:** `x-admin-token: admin_secret_2026`
-- **Response Format (`200 OK`):**
-  ```json
-  { "message": "Booking deleted" }
-  ```
-
----
-
-### 3. Authentication & Users
-
-#### `POST /api/auth/register`
-- **Description:** Register a new user account.
-- **Access:** Public
-- **Request Body:**
-  ```json
-  {
-    "name": "Jane Doe",
-    "email": "jane@example.com",
-    "password": "securepassword123"
-  }
-  ```
-- **Response Format (`200 OK`):** Returns success status, a JWT `token`, and a `user` object.
-
-#### `POST /api/auth/login`
-- **Description:** Authenticate a user and receive a token.
-- **Access:** Public
-- **Request Body:**
-  ```json
-  {
-    "email": "jane@example.com",
-    "password": "securepassword123"
-  }
-  ```
-- **Response Format (`200 OK`):** Returns success status, a JWT `token`, and a `user` object.
-
-#### `GET /api/auth/me`
-- **Description:** Retrieve the currently authenticated user's profile data.
-- **Access:** Protected (Requires Bearer Token authentication via `Authorization` header)
-- **Response Format:** Returns the `user` object.
-
----
-
-### 4. Customer Reviews
-
-#### `GET /api/reviews`
-- **Description:** Retrieve all glowing customer reviews, sorted by creation date (newest first).
-- **Access:** Public
-- **Response Format:**
-  ```json
-  [
-    {
-      "_id": "664c3cfa4ab21e0015ab2802",
-      "authorName": "Sarah Jenkins",
-      "rating": 5,
-      "comment": "Absolutely flawless! SparkleClean transformed my home...",
-      "avatar": "https://images.unsplash.com/...jpeg",
-      "serviceName": "Deep Home Clean",
-      "createdAt": "2026-05-29T03:05:00.000Z"
-    }
-  ]
-  ```
-
-#### `POST /api/reviews`
-- **Description:** Allow verified clients to post new reviews directly. Auto-generates high-end avatar images on submission.
-- **Access:** Public
-- **Request Body:**
-  ```json
-  {
-    "authorName": "Jessica Chen",
-    "rating": 5,
-    "comment": "Outstanding oven degreasing! Will book every spring.",
-    "serviceName": "Kitchen Intensive"
-  }
-  ```
+| Endpoint | Method | Description | Access |
+|---|---|---|---|
+| `/api/services` | `GET` | Retrieve all active cleaning services in the catalog. | Public |
+| `/api/bookings` | `POST` | Create a new cleaning appointment in the database. | Public |
+| `/api/bookings` | `GET` | Retrieve all received client bookings. | Protected |
+| `/api/bookings/:id/complete` | `PATCH` | Toggle booking status to "Completed". | Protected |
+| `/api/bookings/:id` | `DELETE` | Permanently delete a booking entry from the database. | Protected |
+| `/api/auth/register` | `POST` | Register a new user account. | Public |
+| `/api/auth/login` | `POST` | Authenticate a user and receive a token. | Public |
+| `/api/auth/me` | `GET` | Retrieve the currently authenticated user's profile data. | Protected |
+| `/api/reviews` | `GET` | Retrieve all glowing customer reviews. | Public |
+| `/api/reviews` | `POST` | Allow verified clients to post new reviews directly. | Public |
 
 ---
 
