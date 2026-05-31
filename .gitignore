@@ -18,8 +18,6 @@ frontend/build/
 frontend/dist/
 
 # Environment variables
-.env
-.env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -28,7 +26,6 @@ frontend/dist/
 .node_repl_history
 
 # Editor directories and files
-.vscode/
 .idea/
 .DS_Store
 *.suo
@@ -36,3 +33,4 @@ frontend/dist/
 *.njsproj
 *.sln
 *.sw?
+config.bat

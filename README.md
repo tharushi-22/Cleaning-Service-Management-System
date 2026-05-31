@@ -79,7 +79,6 @@ Follow these simple, step-by-step commands to get SparkleClean fully active on y
    ```bash
    npm start
    ```
-   *(Note: For live reload during development, use `npm run dev`)*
    *The server will start running on [http://localhost:5000](http://localhost:5000).*
 
 ---
@@ -99,10 +98,3 @@ Follow these simple, step-by-step commands to get SparkleClean fully active on y
    npm start
    ```
    *The client interface will boot up and run on [http://localhost:3000](http://localhost:3000).*
-
----
-
-## 🔒 Security & Admin Access
-To view all submitted orders in the protected admin panel, head over to the route `/admin` in the client browser. 
-- Enter the secure token: **`admin_secret_2026`**
-- This token will authenticate your session and open the analytical control deck.
