@@ -33,4 +33,3 @@ frontend/dist/
 *.njsproj
 *.sln
 *.sw?
-config.bat
